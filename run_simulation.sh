@@ -2,11 +2,11 @@
 
 CONTAINER_NAME="adc2024_gem5"
 IMAGE_NAME="gvodanovic/adc2024_gem5"
-RESULT_PATH="se_results/daxpy"
+RESULT_PATH="./se_results/"
 
 
 # Definir el benchmark a correr, opciones: daxpy, simFisica, bubbleSort
-BENCHMARK="se-benchmarks/daxpy"
+BENCHMARK="daxpy"
 
 # Definir el procesador a utilizar, opciones: in_order, out_of_order, etc.
 PROCESSOR="in_order"
@@ -16,4 +16,4 @@ docker run -it --rm -v $(pwd):/local --privileged -v /tmp/.X11-unix:/tmp/.X11-un
 
 docker run -it --rm -v $(pwd):/local --privileged -v /tmp/.X11-unix:/tmp/.X11-unix -v "$HOME/.Xauthority:/root/.Xauthority:rw" --name $CONTAINER_NAME $IMAGE_NAME /bin/bash -c "/opt/gem5/build/ARM/gem5.opt -d $RESULT_PATH /local/scripts/se.py /local/scripts/cpu_config.toml $PROCESSOR /local/benchmarks/$BENCHMARK.img" > sim.log
 
-python3 scripts/stat-collect.py se_results/daxpy/stats.txt
+python3 scripts/stat-collect.py se_results/stats.txt
