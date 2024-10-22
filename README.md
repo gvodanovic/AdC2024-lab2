@@ -1,4 +1,4 @@
-# Arquitectura de computadoras - 2024
+# Arquitectura de Computadoras - 2024
 
 ## Estructura de archivos
 
