@@ -57,14 +57,26 @@ def retrieve_stats(filename):
 
     with open(filename) as f:
         for line in f:
+            # out of order also writes the stats out of order :)
+            if current_stat == stat_names[-1]:
+                current_stat = next(stat_names_iterator)
+                continue
             if current_stat and current_stat in line:
                 value = float(line.split()[1])
                 stats[current_stat].append(value)
                 current_stat = next(stat_names_iterator)
 
+        f.seek(0)
+        for line in f:
+            # out of order also writes the stats out of order :)
+            if len(stats[stat_names[-1]]) >= 2:
+                break
+            if stat_names[-1] in line:
+                value = float(line.split()[1])
+                stats[stat_names[-1]].append(value)
+
 retrieve_stats(sys.argv[1])
 for key in stats:
-    #print(stats)
     print(f"{key:70} {(stats[key][1] - stats[key][0])}")
     if key == "simInsts":
         numInst = stats[key][1] - stats[key][0]

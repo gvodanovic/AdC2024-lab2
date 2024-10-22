@@ -10,40 +10,31 @@ class BP_tournament(TournamentBP):
     globalCtrBits = 2
     choicePredictorSize = 1024
     choiceCtrBits = 2
-
-# Bi-Mode Branch Predictor
-class BP_BiMode(BiModeBP):
-    globalPredictorSize = 8192
-    globalCtrBits = 2
-    choicePredictorSize = 8192
-    choiceCtrBits = 2
+    BTBEntries = 128
+    BTBTagSize = 18
+    RASSize = 8
     instShiftAmt = 2
 
-class L1Cache(Cache):
+class L1Cache(Cache): 
     tag_latency = 2
     data_latency = 2
     response_latency = 2
     tgts_per_mshr = 8
+    # Consider the L2 a victim cache also for clean lines
     writeback_clean = True
-
-
-# Instruction Cache
+            
 class L1I(L1Cache):
     mshrs = 2
     size = "32kB"
     assoc = 2
     is_read_only = True
 
-
-# Data Cache
 class L1D(L1Cache):
     mshrs = 6
     size = "32kB"
     assoc = 2
     write_buffers = 16
-
-
-# L2 Cache
+        
 class L2(Cache):
     tag_latency = 15
     data_latency = 15
@@ -53,9 +44,10 @@ class L2(Cache):
     size = "2MB"
     assoc = 16
     write_buffers = 8
+    prefetch_on_access = True
     clusivity = "mostly_excl"
     # Simple stride prefetcher
-    prefetcher = StridePrefetcher(degree=8, latency=1, prefetch_on_access=True)
+    prefetcher = StridePrefetcher(degree=8, latency=1)
     tags = BaseSetAssoc()
     replacement_policy = RandomRP()
 

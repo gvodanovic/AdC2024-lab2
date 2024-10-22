@@ -8,7 +8,6 @@ class BP_local(LocalBP):
     localCtrBits = 2
 
 class BP_tournament(TournamentBP):
-    ras = ReturnAddrStack(numEntries=8)
     localPredictorSize = 64
     localCtrBits = 2
     localHistoryTableSize = 64
@@ -16,8 +15,10 @@ class BP_tournament(TournamentBP):
     globalCtrBits = 2
     choicePredictorSize = 1024
     choiceCtrBits = 2
+    BTBEntries = 128
+    BTBTagSize = 18
+    RASSize = 8
     instShiftAmt = 2
-
 
 class ICache(Cache):
     data_latency = 1
@@ -50,5 +51,5 @@ class L2(Cache):
     write_buffers = 16
 
 cpu_name = __name__
-cpu_spec = (HPI.HPI, ICache, DCache, L2, BP_tournament)
+cpu_spec = (HPI.HPI, ICache, DCache, L2, BP_local)
 

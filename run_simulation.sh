@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CONTAINER_NAME="adc2024_gem5"
-IMAGE_NAME="gvodanovic/adc2024_gem5"
+IMAGE_NAME="gvodanovic/adc_gem5:latest"
 RESULT_PATH="./se_results/"
 
 
