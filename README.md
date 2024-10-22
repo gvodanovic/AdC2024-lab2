@@ -1,4 +1,4 @@
-# AdC Lab 2
+# Arquitectura de computadoras - 2024
 
 ## Estructura de archivos
 
